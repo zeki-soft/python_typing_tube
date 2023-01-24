@@ -1,0 +1,19 @@
+steps:
+
+# Dockerイメージの作成
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/python-typing-tube', '.']
+
+# DockerイメージをContainer RegistryへPush
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/python-typing-tube']
+
+# Cloud BuildでビルドしてContainer Registryにプッシュ
+# cd C:\Users\hatoi\git\python-typing-tube
+# gcloud builds submit --region us-central1 --config cloudbuild.yaml
+
+# Clourd Runへデプロイは手動実行
+# https://console.cloud.google.com/gcr/images/zekisoft-340512/global/python-typing-tube?project=zekisoft-340512
+
+images:
+- 'gcr.io/$PROJECT_ID/python-typing-tube'

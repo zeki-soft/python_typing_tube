@@ -1,0 +1,15 @@
+{
+    "name": "Python3.8.0 Devlop Docker",
+    "context": "..",
+    "dockerFile": "../Dockerfile",
+    "workspaceFolder": "/home",
+    "extensions": [
+        "ms-python.python",
+        "njpwerner.autodocstring",
+        "mosapride.zenkaku",
+        "octref.vetur",
+        "ms-python.vscode-pylance",
+        "streetsidesoftware.code-spell-checker"        
+    ],
+    "forwardPorts": [9000]
+}
