@@ -7,9 +7,9 @@ RUN sed -i 's@archive.ubuntu.com@www.ftp.ne.jp/Linux/packages/ubuntu/archive@g' 
 # モジュールコピー
 RUN mkdir -p /app/python
 RUN mkdir -p /app/shell
-COPY src/*.py /app/python
-COPY resource/*.sh /app/shell
-COPY resource/requirements.txt /tmp
+COPY src/*.py /app/python/
+COPY resource/*.sh /app/shell/
+COPY resource/requirements.txt /tmp/
 
 # コマンドアップデート
 RUN apt-get update && apt-get install -y --no-install-recommends wget curl build-essential libreadline-dev \
