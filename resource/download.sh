@@ -54,8 +54,11 @@ python /app/python/pretty.py ${VIDEO_ID} > /tmp/${VIDEO_ID}/${VIDEO_ID}.txt
 MIDI_FILE="/tmp/${VIDEO_ID}/${VIDEO_ID}.mid"
 echo $MIDI_FILE
 
+end_time=`date +%s`
+run_time=$((end_time - start_time))
+
 # ファイルをアップロード
-curl -X POST -F "videoid=${VIDEO_ID}" -F "midiFile=@/tmp/${VIDEO_ID}/${VIDEO_ID}.mid" -F "textFile=@/tmp/${VIDEO_ID}/${VIDEO_ID}.txt" "${URL}/rest/autoUpload"
+curl -X POST -F "videoid=${VIDEO_ID}" -F "time=${run_time}" -F "midiFile=@/tmp/${VIDEO_ID}/${VIDEO_ID}.mid" -F "textFile=@/tmp/${VIDEO_ID}/${VIDEO_ID}.txt" "${URL}/rest/autoUpload"
 
 # ファイル削除
 rm -rf /tmp/*
