@@ -1,0 +1,52 @@
+# dockerイメージ表示
+docker image ls
+
+# dockerプロセス表示
+docker ps
+
+# イメージからコンテナ名をつけて新規起動
+docker run --name [コンテナ名] -it [コンテナイメージ] /bin/bash
+
+# コンテナ名を指定してログイン（Ctrl+q+pで抜けること）
+docker exec -it [コンテナ名] bash
+
+# コンテナからイメージ作成
+docker commit [コンテナ名] zekisoft/typing-tube-convert
+
+# イメージをdockerhubにプッシュ
+docker push zekisoft/typing-tube
+
+# ビルドキャッシュ削除
+docker builder prune
+
+# ローカル⇒コンテナ転送
+set CONTAINER_ID=d44c2260ee172d374e5ac5732f9d8fa59366dbdfdfd467fcec19b7c7a5cc2dc8
+docker cp C:\Users\hatoi\Documents\python-typing-tube\src\pydub_mp3.py %CONTAINER_ID%:/app/python
+docker cp C:\Users\hatoi\Documents\python-typing-tube\src\pretty.py %CONTAINER_ID%:/app/python
+docker cp C:\Users\hatoi\Documents\python-typing-tube\src\piano_convert.py %CONTAINER_ID%:/app/python
+docker cp C:\Users\hatoi\Documents\python-typing-tube\src\download.sh %CONTAINER_ID%:/app/shell
+docker cp C:\Users\hatoi\Documents\python-typing-tube\src\downloadLoop.sh %CONTAINER_ID%:/app/shell
+
+# コンテナ⇒ローカルへ転送
+docker cp %CONTAINER_ID%:/usr/bin/ffmpeg C:\Users\hatoi\Downloads\work
+docker cp %CONTAINER_ID%:/usr/bin/ffprobe C:\Users\hatoi\Downloads\work
+
+# Dockerfileからイメージファイルをビルド(Dockerfileの配置パスで実行)
+cd C:\Users\hatoi\Documents\python-typing-tube
+docker build -t [イメージ名] .
+docker build -t zekisoft/python-typing-tube .
+
+# Dockerイメージからコンテナ実行
+docker run -p [転送元ポート:転送先ポート] --name [コンテナ名] -it [イメージ名] /bin/bash
+docker run --name python-typing-tube -it zekisoft/python-typing-tube /bin/bash
+
+# dockerコンテナ接続（ローカル用）
+docker exec -it [コンテナ名] /bin/bash
+
+# ローカルイメージをレポジトリのタグ名を付ける
+docker tag [SOURCE_IMAGE] [HOSTNAME]/[PROJECT-ID]/[IMAGE]:[TAG]
+docker tag zekisoft/python-typing-tube gcr.io/zekisoft-340512/python-typing-tube
+
+# DockerイメージをContainer Registryにプッシュ
+docker push [HOSTNAME]/[PROJECT-ID]/[IMAGE]
+docker push gcr.io/zekisoft-340512/python-typing-tube

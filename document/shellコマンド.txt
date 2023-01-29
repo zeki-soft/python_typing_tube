@@ -1,0 +1,27 @@
+# Youtubeダウンロード
+yt-dlp https://www.youtube.com/watch?v=SpwOi45-rSY -x --audio-format mp3 -o /tmp/SpwOi45-rSY.mp3
+
+# 楽器パートを分離
+spleeter separate -p spleeter:5stems -o /tmp '/tmp/SpwOi45-rSY.mp3'
+
+# WAV⇒MP3変換
+python /app/python/pydub_mp3.py SpwOi45-rSY
+
+# ピアノ音源(MP3)を解析してMIDI変換
+python /app/python/piano_convert.py SpwOi45-rSY
+
+# MIDI解析(テキスト変換)
+python /app/python/pretty.py SpwOi45-rSY > /tmp/SpwOi45-rSY/SpwOi45-rSY.txt
+
+# ダウンロードシェル実行(引数1:接続先URL,2:ダウンロード対象ID)
+# 自動生成(status:0)の動画をダウンロードしてMIDI/TEXTデータを登録してダウンロード済み(ステータス:2)に更新
+bash /app/shell/download.sh https://www.typing-tube.com
+bash /app/shell/download.sh http://192.168.0.20:8080
+bash /app/shell/download.sh http://192.168.0.20:8080 YOUTUBEID
+
+# ダウンロードシェル実行(引数1:接続先URL) ※ダウンロード対象が無くなるまで繰り返し
+bash /app/shell/downloadLoop.sh https://www.typing-tube.com
+bash /app/shell/downloadLoop.sh http://192.168.0.20:8080
+
+# テスト用
+bash /app/shell/test.sh
