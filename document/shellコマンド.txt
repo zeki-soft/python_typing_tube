@@ -1,8 +1,11 @@
 # Youtubeダウンロード
-yt-dlp https://www.youtube.com/watch?v=SpwOi45-rSY -x --audio-format mp3 -o /tmp/SpwOi45-rSY.mp3
+yt-dlp https://www.youtube.com/watch?v=SpwOi45-rSY -x --audio-format wav -o /tmp/SpwOi45-rSY.wav
 
 # 楽器パートを分離
-spleeter separate -p spleeter:5stems -o /tmp '/tmp/SpwOi45-rSY.mp3'
+# spleeter separate -p spleeter:5stems -o /tmp '/tmp/SpwOi45-rSY.wav'
+
+# メロディーフレーズをMIDIに変換
+basic-pitch /tmp/SpwOi45-rSY /tmp/SpwOi45-rSY/piano.wav
 
 # WAV⇒MP3変換
 python /app/python/pydub_mp3.py SpwOi45-rSY

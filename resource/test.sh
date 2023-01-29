@@ -8,33 +8,22 @@ VIDEO_ID=ItRRrZIjCe4
 
 # Youtubeダウンロード処理
 echo "【yt-dlp】"
-yt-dlp https://www.youtube.com/watch?v=${VIDEO_ID} -x --audio-format mp3 -o "/tmp/${VIDEO_ID}.%(ext)s"
+# yt-dlp https://www.youtube.com/watch?v=${VIDEO_ID} -x --audio-format mp3 -o "/tmp/${VIDEO_ID}.%(ext)s"
+yt-dlp https://www.youtube.com/watch?v=${VIDEO_ID} -x --audio-format wav -o "/tmp/${VIDEO_ID}.%(ext)s"
 
-# 楽器パートを分離
-echo "【spleeter】"
-spleeter separate -p spleeter:5stems -o /tmp "/tmp/${VIDEO_ID}.mp3"
+# メロディーフレーズをMIDIに変換
+echo "【basic-pitch】"
+basic-pitch /tmp /tmp/${VIDEO_ID}.wav
 
-# 分離処理ができない場合はエラー
-if [ ! -e "/tmp/${VIDEO_ID}" ]; then
-    rm -rf /tmp/*
-    echo "エラー【${VIDEO_ID}】"
-    exit
-fi
-
-# WAV⇒MP3変換
-echo "【pydub_mp3.py】"
-python /app/python/pydub_mp3.py ${VIDEO_ID}
-
-# ピアノ音源(MP3)を解析してMIDI変換
-echo "【piano_convert.py】"
-python /app/python/piano_convert.py ${VIDEO_ID}
+# MIDIファイル名を変更
+mv /tmp/${VIDEO_ID}_basic_pitch.mid /tmp/${VIDEO_ID}.mid
 
 # MIDI解析(テキスト変換)
 echo "【pretty.py】"
-python /app/python/pretty.py ${VIDEO_ID} > /tmp/${VIDEO_ID}/${VIDEO_ID}.txt
+python /app/python/pretty.py ${VIDEO_ID} > /tmp/${VIDEO_ID}.txt
 
 # 変換結果を表示
-TXT_FILE="/tmp/${VIDEO_ID}/${VIDEO_ID}.txt"
+TXT_FILE="/tmp/${VIDEO_ID}.txt"
 cat $TXT_FILE
 
 # ファイル削除

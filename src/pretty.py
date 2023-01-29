@@ -15,7 +15,7 @@ args = sys.argv
 youtubeID = args[1]
 
 # 作業ディレクトリ
-os.chdir('/tmp/' + youtubeID)
+os.chdir('/tmp')
 
 # MIDIファイルのロード
 midi_data = pretty_midi.PrettyMIDI(youtubeID + '.mid')

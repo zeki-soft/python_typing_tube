@@ -20,16 +20,16 @@ docker push zekisoft/typing-tube
 docker builder prune
 
 # ローカル⇒コンテナ転送
-set CONTAINER_ID=d44c2260ee172d374e5ac5732f9d8fa59366dbdfdfd467fcec19b7c7a5cc2dc8
+set CONTAINER_ID=3a05437a0b5aa087345ee76be8acc237598c2d28f657244d087f433785541801
 docker cp C:\Users\hatoi\Documents\python-typing-tube\src\pydub_mp3.py %CONTAINER_ID%:/app/python
 docker cp C:\Users\hatoi\Documents\python-typing-tube\src\pretty.py %CONTAINER_ID%:/app/python
 docker cp C:\Users\hatoi\Documents\python-typing-tube\src\piano_convert.py %CONTAINER_ID%:/app/python
-docker cp C:\Users\hatoi\Documents\python-typing-tube\src\download.sh %CONTAINER_ID%:/app/shell
-docker cp C:\Users\hatoi\Documents\python-typing-tube\src\downloadLoop.sh %CONTAINER_ID%:/app/shell
+docker cp C:\Users\hatoi\Documents\python-typing-tube\resource\download.sh %CONTAINER_ID%:/app/shell
+docker cp C:\Users\hatoi\Documents\python-typing-tube\resource\downloadLoop.sh %CONTAINER_ID%:/app/shell
+docker cp C:\Users\hatoi\Documents\python-typing-tube\resource\test.sh %CONTAINER_ID%:/app/shell
 
 # コンテナ⇒ローカルへ転送
-docker cp %CONTAINER_ID%:/usr/bin/ffmpeg C:\Users\hatoi\Downloads\work
-docker cp %CONTAINER_ID%:/usr/bin/ffprobe C:\Users\hatoi\Downloads\work
+docker cp %CONTAINER_ID%:/tmp C:\Users\hatoi\Downloads\work
 
 # Dockerfileからイメージファイルをビルド(Dockerfileの配置パスで実行)
 cd C:\Users\hatoi\Documents\python-typing-tube

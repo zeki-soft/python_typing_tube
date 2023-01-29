@@ -15,4 +15,4 @@ cd C:\Users\hatoi\Documents\python-typing-tube
 gcloud builds submit --region us-central1 --config cloudbuild.yaml
 
 # Clourd Runへデプロイは手動実行
-# https://console.cloud.google.com/gcr/images/zekisoft-340512/global/python-typing-tube?project=zekisoft-340512
+https://console.cloud.google.com/gcr/images/zekisoft-340512/global/python-typing-tube?project=zekisoft-340512

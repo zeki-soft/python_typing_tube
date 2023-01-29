@@ -27,38 +27,26 @@ else
 fi
 
 # Youtubeダウンロード処理
-yt-dlp https://www.youtube.com/watch?v=${VIDEO_ID} -x --audio-format mp3 -o "/tmp/${VIDEO_ID}.%(ext)s"
+yt-dlp https://www.youtube.com/watch?v=${VIDEO_ID} -x --audio-format wav -o "/tmp/${VIDEO_ID}.%(ext)s"
 
-# 楽器パートを分離
-spleeter separate -p spleeter:5stems -o /tmp "/tmp/${VIDEO_ID}.mp3"
+# メロディーフレーズをMIDIに変換
+basic-pitch /tmp /tmp/${VIDEO_ID}.wav
 
-# 分離処理ができない場合はエラー
-if [ ! -e "/tmp/${VIDEO_ID}" ]; then
-    # フォルダが存在しない場合
-    curl -d "videoid=${VIDEO_ID}" ${URL}/rest/errUpload
-    rm -rf /tmp/*
-    echo "ダウンロードエラー【${VIDEO_ID}】"
-    exit
-fi
-
-# WAV⇒MP3変換
-python /app/python/pydub_mp3.py ${VIDEO_ID}
-
-# ピアノ音源(MP3)を解析してMIDI変換
-python /app/python/piano_convert.py ${VIDEO_ID}
+# MIDIファイル名を変更
+mv /tmp/${VIDEO_ID}_basic_pitch.mid /tmp/${VIDEO_ID}.mid
 
 # MIDI解析(テキスト変換)
-python /app/python/pretty.py ${VIDEO_ID} > /tmp/${VIDEO_ID}/${VIDEO_ID}.txt
+python /app/python/pretty.py ${VIDEO_ID} > /tmp/${VIDEO_ID}.txt
 
 # 変換結果を登録
-MIDI_FILE="/tmp/${VIDEO_ID}/${VIDEO_ID}.mid"
+MIDI_FILE="/tmp/${VIDEO_ID}.mid"
 echo $MIDI_FILE
 
 end_time=`date +%s`
 run_time=$((end_time - start_time))
 
 # ファイルをアップロード
-curl -X POST -F "videoid=${VIDEO_ID}" -F "time=${run_time}" -F "midiFile=@/tmp/${VIDEO_ID}/${VIDEO_ID}.mid" -F "textFile=@/tmp/${VIDEO_ID}/${VIDEO_ID}.txt" "${URL}/rest/autoUpload"
+curl -X POST -F "videoid=${VIDEO_ID}" -F "time=${run_time}" -F "midiFile=@/tmp/${VIDEO_ID}.mid" -F "textFile=@/tmp/${VIDEO_ID}.txt" "${URL}/rest/autoUpload"
 
 # ファイル削除
 rm -rf /tmp/*
