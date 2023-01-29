@@ -16,6 +16,9 @@ python /app/python/piano_convert.py SpwOi45-rSY
 # MIDI解析(テキスト変換)
 python /app/python/pretty.py SpwOi45-rSY > /tmp/SpwOi45-rSY/SpwOi45-rSY.txt
 
+# 簡易サーバ起動
+python /app/python/server.py &
+
 # ダウンロードシェル実行(引数1:接続先URL,2:ダウンロード対象ID)
 # 自動生成(status:0)の動画をダウンロードしてMIDI/TEXTデータを登録してダウンロード済み(ステータス:2)に更新
 bash /app/shell/download.sh https://www.typing-tube.com

@@ -44,3 +44,6 @@ ENV TZ=Asia/Tokyo
 # 不要ファイル削除
 RUN apt-get autoremove -y
 RUN rm -rf /tmp/*
+
+# デプロイ疎通用の簡易サーバ起動
+CMD ["python","/app/python/server.py"]

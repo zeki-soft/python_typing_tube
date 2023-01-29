@@ -20,10 +20,12 @@ docker push zekisoft/typing-tube
 docker builder prune
 
 # ローカル⇒コンテナ転送
-set CONTAINER_ID=3a05437a0b5aa087345ee76be8acc237598c2d28f657244d087f433785541801
+set CONTAINER_ID=9bf90d6a8d69ab8bf3ca2712b7092b3fe2ce0ec657232a1b41abde63d76d861c
 docker cp C:\Users\hatoi\Documents\python-typing-tube\src\pydub_mp3.py %CONTAINER_ID%:/app/python
 docker cp C:\Users\hatoi\Documents\python-typing-tube\src\pretty.py %CONTAINER_ID%:/app/python
 docker cp C:\Users\hatoi\Documents\python-typing-tube\src\piano_convert.py %CONTAINER_ID%:/app/python
+docker cp C:\Users\hatoi\Documents\python-typing-tube\src\server.py %CONTAINER_ID%:/app/python
+docker cp C:\Users\hatoi\Documents\python-typing-tube\src\index.html %CONTAINER_ID%:/app/python
 docker cp C:\Users\hatoi\Documents\python-typing-tube\resource\download.sh %CONTAINER_ID%:/app/shell
 docker cp C:\Users\hatoi\Documents\python-typing-tube\resource\downloadLoop.sh %CONTAINER_ID%:/app/shell
 docker cp C:\Users\hatoi\Documents\python-typing-tube\resource\test.sh %CONTAINER_ID%:/app/shell
@@ -38,7 +40,7 @@ docker build -t zekisoft/python-typing-tube .
 
 # Dockerイメージからコンテナ実行
 docker run -p [転送元ポート:転送先ポート] --name [コンテナ名] -it [イメージ名] /bin/bash
-docker run --name python-typing-tube -it zekisoft/python-typing-tube /bin/bash
+docker run -p 8080:8080 --name python-typing-tube -it zekisoft/python-typing-tube /bin/bash
 
 # dockerコンテナ接続（ローカル用）
 docker exec -it [コンテナ名] /bin/bash
