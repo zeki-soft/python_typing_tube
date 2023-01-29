@@ -9,15 +9,15 @@ steps:
   args: ['push', 'gcr.io/$PROJECT_ID/python-typing-tube']
 
 # DockerイメージをClourd Runへデプロイ
-# - name: 'gcr.io/cloud-builders/gcloud'
-#  args:
-#   - 'run'
-#   - 'deploy'
-#   - 'python-typing-tube'
-#   - '--image'
-#   - 'gcr.io/$PROJECT_ID/python-typing-tube'
-#   - '--region'
-#   - 'us-central1'
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+   - 'run'
+   - 'deploy'
+   - 'python-typing-tube'
+   - '--image'
+   - 'gcr.io/$PROJECT_ID/python-typing-tube'
+   - '--region'
+   - 'us-central1'
 
 images:
 - 'gcr.io/$PROJECT_ID/python-typing-tube'
