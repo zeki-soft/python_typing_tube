@@ -4,6 +4,9 @@ docker image ls
 # dockerプロセス表示
 docker ps
 
+# dockerリソース表示
+docker container stats
+
 # イメージからコンテナ名をつけて新規起動
 docker run --name [コンテナ名] -it [コンテナイメージ] /bin/bash
 
@@ -40,7 +43,10 @@ docker build -t zekisoft/python-typing-tube .
 
 # Dockerイメージからコンテナ実行
 docker run -p [転送元ポート:転送先ポート] --name [コンテナ名] -it [イメージ名] /bin/bash
-docker run -p 8080:8080 --name python-typing-tube -it zekisoft/python-typing-tube /bin/bash
+docker run -p 8888:8080 --name python-typing-tube -it zekisoft/python-typing-tube /bin/bash
+
+# リソース制限してコンテナ実行
+docker run --cpus="1.0" --memory="4096m" -p 8888:8080 --name python-typing-tube -it zekisoft/python-typing-tube /bin/bash
 
 # dockerコンテナ接続（ローカル用）
 docker exec -it [コンテナ名] /bin/bash
