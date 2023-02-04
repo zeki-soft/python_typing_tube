@@ -1,4 +1,7 @@
 #!/bin/sh
+################################################################# 
+# basic-pitch:8GiB
+#################################################################
 
 # 開始時間
 start_time=`date +%s`
@@ -8,7 +11,6 @@ VIDEO_ID=ItRRrZIjCe4
 
 # Youtubeダウンロード処理
 echo "【yt-dlp】"
-# yt-dlp https://www.youtube.com/watch?v=${VIDEO_ID} -x --audio-format mp3 -o "/tmp/${VIDEO_ID}.%(ext)s"
 yt-dlp https://www.youtube.com/watch?v=${VIDEO_ID} -x --audio-format wav -o "/tmp/${VIDEO_ID}.%(ext)s"
 
 # メロディーフレーズをMIDIに変換

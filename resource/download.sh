@@ -1,4 +1,10 @@
 #!/bin/sh
+################################################################# 
+# curl:8GiB
+# basic-pitch:8GiB
+# 合計16GiB
+#################################################################
+
 
 # 引数チェック
 if [ $# -lt 1 ]; then
@@ -14,7 +20,7 @@ URL=$1
 
 # ダウンロード対象を選択
 if [ -z "$2" ]; then
-    VIDEO_ID=`curl -X POST ${URL}/rest/search`
+    VIDEO_ID=`curl -X POST ${URL}/python/search`
 else
     VIDEO_ID=$2
 fi
@@ -46,7 +52,7 @@ end_time=`date +%s`
 run_time=$((end_time - start_time))
 
 # ファイルをアップロード
-curl -X POST -F "videoid=${VIDEO_ID}" -F "time=${run_time}" -F "midiFile=@/tmp/${VIDEO_ID}.mid" -F "textFile=@/tmp/${VIDEO_ID}.txt" "${URL}/rest/autoUpload"
+curl -X POST -F "videoid=${VIDEO_ID}" -F "time=${run_time}" -F "midiFile=@/tmp/${VIDEO_ID}.mid" -F "textFile=@/tmp/${VIDEO_ID}.txt" "${URL}/python/upload"
 
 # ファイル削除
 rm -rf /tmp/*
