@@ -37,7 +37,7 @@ docker cp C:\Users\hatoi\Documents\python-typing-tube\resource\test.sh %CONTAINE
 docker cp %CONTAINER_ID%:/tmp C:\Users\hatoi\Downloads\work
 
 # Dockerfileからイメージファイルをビルド(Dockerfileの配置パスで実行)
-cd C:\Users\hatoi\Documents\python-typing-tube
+cd C:\Users\hatoi\git\python-typing-tube
 docker build -t [イメージ名] .
 docker build -t zekisoft/python-typing-tube .
 
