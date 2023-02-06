@@ -5,10 +5,9 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN sed -i 's@archive.ubuntu.com@www.ftp.ne.jp/Linux/packages/ubuntu/archive@g' /etc/apt/sources.list
 
 # モジュールコピー
-RUN mkdir -p /app/python
-RUN mkdir -p /app/shell
-COPY src/*.py /app/python/
-COPY resource/*.sh /app/shell/
+RUN mkdir /app
+COPY python/ /app/
+COPY shell/ /app/
 COPY resource/requirements.txt /tmp/
 
 # コマンドアップデート

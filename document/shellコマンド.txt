@@ -1,23 +1,26 @@
 # Youtubeダウンロード
-yt-dlp https://www.youtube.com/watch?v=SpwOi45-rSY -x --audio-format wav -o /tmp/SpwOi45-rSY.wav
+yt-dlp https://www.youtube.com/watch?v=T5LKPs-94i4 -x --audio-format wav -o /tmp/T5LKPs-94i4.wav
 
 # 楽器パートを分離
-# spleeter separate -p spleeter:5stems -o /tmp '/tmp/SpwOi45-rSY.wav'
+# spleeter separate -p spleeter:5stems -o /tmp '/tmp/T5LKPs-94i4.wav'
 
 # メロディーフレーズをMIDIに変換
-basic-pitch /tmp/SpwOi45-rSY /tmp/SpwOi45-rSY/piano.wav
+basic-pitch /tmp /tmp/T5LKPs-94i4.wav
 
 # WAV⇒MP3変換
-python /app/python/pydub_mp3.py SpwOi45-rSY
+python /app/python/pydub_mp3.py T5LKPs-94i4
 
 # ピアノ音源(MP3)を解析してMIDI変換
-python /app/python/piano_convert.py SpwOi45-rSY
+python /app/python/piano_convert.py T5LKPs-94i4
 
 # MIDI解析(テキスト変換)
-python /app/python/pretty.py SpwOi45-rSY > /tmp/SpwOi45-rSY/SpwOi45-rSY.txt
+python /app/python/pretty.py T5LKPs-94i4 > /tmp/T5LKPs-94i4/T5LKPs-94i4.txt
 
 # 簡易サーバ起動
 python /app/python/server.py &
+
+# テンポ解析
+python /app/python/tempo.py T5LKPs-94i4.mp3
 
 # ダウンロードシェル実行(引数1:接続先URL,2:ダウンロード対象ID)
 # 自動生成(status:0)の動画をダウンロードしてMIDI/TEXTデータを登録してダウンロード済み(ステータス:2)に更新

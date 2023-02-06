@@ -1,3 +1,8 @@
+# 注意 #################################################
+requirements.txt 改行コード:\r\n
+シェルスクリプト(.sh) 改行コード:\n
+########################################################
+
 # dockerイメージ表示
 docker image ls
 
@@ -22,19 +27,10 @@ docker push zekisoft/typing-tube
 # ビルドキャッシュ削除
 docker builder prune
 
-# ローカル⇒コンテナ転送
-set CONTAINER_ID=9bf90d6a8d69ab8bf3ca2712b7092b3fe2ce0ec657232a1b41abde63d76d861c
-docker cp C:\Users\hatoi\Documents\python-typing-tube\src\pydub_mp3.py %CONTAINER_ID%:/app/python
-docker cp C:\Users\hatoi\Documents\python-typing-tube\src\pretty.py %CONTAINER_ID%:/app/python
-docker cp C:\Users\hatoi\Documents\python-typing-tube\src\piano_convert.py %CONTAINER_ID%:/app/python
-docker cp C:\Users\hatoi\Documents\python-typing-tube\src\server.py %CONTAINER_ID%:/app/python
-docker cp C:\Users\hatoi\Documents\python-typing-tube\src\index.html %CONTAINER_ID%:/app/python
-docker cp C:\Users\hatoi\Documents\python-typing-tube\resource\download.sh %CONTAINER_ID%:/app/shell
-docker cp C:\Users\hatoi\Documents\python-typing-tube\resource\downloadLoop.sh %CONTAINER_ID%:/app/shell
-docker cp C:\Users\hatoi\Documents\python-typing-tube\resource\test.sh %CONTAINER_ID%:/app/shell
-
-# コンテナ⇒ローカルへ転送
+# コンテナ転送
+set CONTAINER_ID=6e23567941a9f3d04a73e2fcc420b4e7f9af9f6169cd4f8b3d6be31fa8240c7d
 docker cp %CONTAINER_ID%:/tmp C:\Users\hatoi\Downloads\work
+docker cp %CONTAINER_ID%:/app/python/* C:\Users\hatoi\git\python-typing-tube\src
 
 # Dockerfileからイメージファイルをビルド(Dockerfileの配置パスで実行)
 cd C:\Users\hatoi\git\python-typing-tube

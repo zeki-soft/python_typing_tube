@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python3.8.0 開発環境",
+            "name": "Python3.8.0",
             "type": "python",
             "request": "launch",
             "program": "${file}",
