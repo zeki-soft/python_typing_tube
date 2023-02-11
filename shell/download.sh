@@ -35,18 +35,18 @@ fi
 # Youtubeダウンロード処理
 yt-dlp https://www.youtube.com/watch?v=${VIDEO_ID} -x --audio-format wav -o "/tmp/${VIDEO_ID}.%(ext)s"
 
-# メロディーフレーズをMIDIに変換
-basic-pitch /tmp /tmp/${VIDEO_ID}.wav
+# メロディーフレーズを(midi/csv)に変換
+basic-pitch --save-note-events /tmp /tmp/${VIDEO_ID}.wav
 
-# MIDIファイル名を変更
+# ファイル名を変更
 mv /tmp/${VIDEO_ID}_basic_pitch.mid /tmp/${VIDEO_ID}.mid
+mv /tmp/${VIDEO_ID}_basic_pitch.csv /tmp/${VIDEO_ID}.csv
 
-# MIDI解析(テキスト変換)
-python /app/python/pretty.py ${VIDEO_ID} > /tmp/${VIDEO_ID}.txt
+# テンポ解析処理(_bpm.txt)
+python /app/python/tempo.py ${VIDEO_ID}
 
-# 変換結果を登録
-MIDI_FILE="/tmp/${VIDEO_ID}.mid"
-echo $MIDI_FILE
+# CSV解析(csv + _bpm.txt → txt)
+python /app/python/csv_analyze.py ${VIDEO_ID}
 
 end_time=`date +%s`
 run_time=$((end_time - start_time))
@@ -59,5 +59,4 @@ rm -rf /tmp/*
 
 end_time=`date +%s`
 run_time=$((end_time - start_time))
-echo "ダウンロード完了【${VIDEO_ID}】"
-echo "実行時間【${run_time}秒】"
+echo "実行時間【${VIDEO_ID}】【${run_time}秒】"

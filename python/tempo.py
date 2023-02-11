@@ -1,27 +1,34 @@
 import sys
 import os
 import librosa
-import numpy as np
 
 # コマンドライン引数(Youtube動画ID)
 args = sys.argv
-fileName = args[1]
+youtubeID = args[1]
 
 # 作業ディレクトリ
 os.chdir('/tmp')
 
 # mp3読み込み
-y, sr = librosa.load('/tmp/' + fileName)
+y, sr = librosa.load('/tmp/' + youtubeID + '.wav')
 
 # テンポとビートの抽出
-tempo, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
+bpm, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
 
-# 音の強度
-# onset_envelope = librosa.onset.onset_strength(y, sr=sr)
+# ビートのタイミングを時間に変換
+beat_times = librosa.frames_to_time(beat_frames, sr=sr)
 
-print('<tempo>')
-print(tempo)
-print('<beat_frames>')
-print(beat_frames)
-#print('<envelope>')
-#print(onset_envelope)
+# 出力ファイルを開く
+f = open('/tmp/' + youtubeID + '_bpm.txt', 'w', encoding='UTF-8')
+
+# ファイル出力
+for i, time in enumerate(beat_times):
+    t = round(time, 3)
+    if i == len(beat_times) - 1:
+        # 最終行のみ
+        f.writelines(str(t))
+    else:
+        f.writelines(str(t) + '\n')
+
+# ファイルを閉じる
+f.close()
