@@ -40,16 +40,15 @@ basic-pitch --save-note-events /tmp /tmp/${VIDEO_ID}.wav
 
 # ファイル名を変更
 mv /tmp/${VIDEO_ID}_basic_pitch.mid /tmp/${VIDEO_ID}.mid
-mv /tmp/${VIDEO_ID}_basic_pitch.csv /tmp/${VIDEO_ID}.csv
 
-# CSV解析(csv + _bpm.txt → txt)
+# CSV解析
 python /app/python/csv_analyze.py ${VIDEO_ID}
 
 end_time=`date +%s`
 run_time=$((end_time - start_time))
 
 # ファイルをアップロード
-curl -X POST -F "videoid=${VIDEO_ID}" -F "time=${run_time}" -F "midiFile=@/tmp/${VIDEO_ID}.mid" -F "textFile=@/tmp/${VIDEO_ID}.txt" "${URL}/python/upload"
+curl -X POST -F "videoid=${VIDEO_ID}" -F "time=${run_time}" -F "midiFile=@/tmp/${VIDEO_ID}.mid" -F "csvFile=@/tmp/${VIDEO_ID}.csv" "${URL}/python/upload"
 
 # ファイル削除
 rm -rf /tmp/*

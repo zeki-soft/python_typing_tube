@@ -19,20 +19,19 @@ basic-pitch --save-note-events /tmp /tmp/${VIDEO_ID}.wav
 
 # ファイル名を変更
 mv /tmp/${VIDEO_ID}_basic_pitch.mid /tmp/${VIDEO_ID}.mid
-mv /tmp/${VIDEO_ID}_basic_pitch.csv /tmp/${VIDEO_ID}.csv
 
-# CSV解析(csv + _bpm.txt → txt)
+# CSV解析
 echo "【csv_analyze.py】"
 python /app/python/csv_analyze.py ${VIDEO_ID}
 
-# 変換結果を表示
-TXT_FILE="/tmp/${VIDEO_ID}.txt"
-cat $TXT_FILE
+# 変換後CSVを表示
+CSV_FILE="/tmp/${VIDEO_ID}.csv"
+cat $CSV_FILE
 
 # ファイル削除
 rm -rf /tmp/*
 
 end_time=`date +%s`
 run_time=$((end_time - start_time))
-echo "\nテスト完了【${VIDEO_ID}】"
+echo "テスト完了【${VIDEO_ID}】"
 echo "実行時間【${run_time}秒】"

@@ -22,8 +22,11 @@ basic-pitch --save-note-events /tmp /tmp/T5LKPs-94i4.wav
 # テンポ解析
 python /app/python/tempo.py T5LKPs-94i4
 
-# CSV解析
+mv /tmp/T5LKPs-94i4_basic_pitch.mid /tmp/T5LKPs-94i4.mid
+mv /tmp/T5LKPs-94i4_basic_pitch.csv /tmp/T5LKPs-94i4.csv
+
 python /app/python/csv_analyze.py T5LKPs-94i4
+# CSV解析
 
 # ダウンロードシェル実行(引数1:接続先URL,2:ダウンロード対象ID)
 # 自動生成(status:0)の動画をダウンロードしてMIDI/TEXTデータを登録してダウンロード済み(ステータス:2)に更新
