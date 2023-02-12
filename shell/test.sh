@@ -21,10 +21,6 @@ basic-pitch --save-note-events /tmp /tmp/${VIDEO_ID}.wav
 mv /tmp/${VIDEO_ID}_basic_pitch.mid /tmp/${VIDEO_ID}.mid
 mv /tmp/${VIDEO_ID}_basic_pitch.csv /tmp/${VIDEO_ID}.csv
 
-# テンポ解析処理
-echo "【tempo.py】"
-python /app/python/tempo.py ${VIDEO_ID}
-
 # CSV解析(csv + _bpm.txt → txt)
 echo "【csv_analyze.py】"
 python /app/python/csv_analyze.py ${VIDEO_ID}

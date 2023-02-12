@@ -1,12 +1,18 @@
 import sys
 import os
 import csv
+import math
+import common_util
+import numpy as np
 from operator import itemgetter
 
 # 定数定義
-MIN_PITCH = 48
-MAX_PITCH = 72
-MIN_VELOCITY = 50
+MIN_PITCH = 36
+MAX_PITCH = 96
+MIN_VELOCITY = 40
+TARGET_LEVEL = 4
+MAX_LEVEL = 8.0
+MIN_LEVEL = 1.0
 
 # コマンドライン引数(Youtube動画ID)
 args = sys.argv
@@ -34,37 +40,25 @@ with open (csvFilePath, 'r') as f:
         pitch = int(line[2])
         velocity = int(line[3])
         # 条件を満たすノートのみ抽出
-        if MIN_PITCH <= pitch <= MAX_PITCH and velocity >= 50 :
+        if MIN_PITCH <= pitch <= MAX_PITCH and velocity >= MIN_VELOCITY :
             csvList.append((start_time, end_time))
 
 # 抽出したCSVリストをソート(start_time昇順)
 csvList.sort(key=itemgetter(0))
 
-# ノートチェック
-def checkNote(t):
-    for item in csvList:
-        start_time = item[0]
-        end_time = item[1]
-        if start_time <= t and t <= end_time:
-            # 対象ノートあり
-            return start_time
-    
-    # 対象ノートなし
-    return 0
-
-# BPMファイルをベースに対象ノートを抽出
-with open('/tmp/' + youtubeID + '_bpm.txt') as f:
-    for line in f:
-        start_time = checkNote(float(line))
-        if start_time > 0 :
-            # 対象ノートを出力
-            timeList.append(start_time)
-
-# 重複削除
-timeList = list(dict.fromkeys(timeList))
-
-# 昇順ソート
-timeList.sort()
+# 0.05秒単位で対象外ノートを増やす
+diff_time_list = np.arange(0.0, 1.0, 0.05)
+for diff_time in diff_time_list:
+    # 譜面とレベルを算出
+    list = common_util.outTimeList(csvList, diff_time);
+    level = common_util.calcLevel(list)
+    if MIN_LEVEL <= level and level <= MAX_LEVEL :
+        # レベル範囲内の場合
+        timeList = list
+        break
+    elif level < 1.0:
+        # 最小レベル以下はチェックふょう
+        break
 
 # 出力ファイルに書き込み
 out_file = open('/tmp/' + youtubeID + '.txt', 'w', encoding='UTF-8')
